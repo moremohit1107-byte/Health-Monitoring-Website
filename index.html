@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PoshanTrack — Anganwadi Nutrition Monitoring</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-icon">🌿</span>
+        <span>PoshanTrack</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">
+          <i class="ri-dashboard-line"></i> Dashboard
+        </a>
+        <a href="tracker.html" class="nav-link">
+          <i class="ri-restaurant-line"></i> Food Tracker
+        </a>
+        <a href="ngos.html" class="nav-link">
+          <i class="ri-hand-heart-line"></i> NGOs Nearby
+        </a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <h1>Welcome to <span>PoshanTrack</span></h1>
+        <p>Monitor and improve child nutrition at Anganwadi centers. Track meals, manage children, and connect with NGOs fighting malnutrition.</p>
+      </section>
+
+      <!-- Stats -->
+      <section class="mb-32">
+        <div class="grid-4" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="ri-group-line"></i></div>
+            <div class="stat-value" id="statChildren">0</div>
+            <div class="stat-label">Children Enrolled</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange"><i class="ri-restaurant-2-line"></i></div>
+            <div class="stat-value" id="statMeals">0</div>
+            <div class="stat-label">Meals Logged Today</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="ri-heart-pulse-line"></i></div>
+            <div class="stat-value" id="statHealthy">0%</div>
+            <div class="stat-label">Normal Weight</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple"><i class="ri-building-2-line"></i></div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Partner NGOs</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="mb-32">
+        <div class="section-header">
+          <h2><i class="ri-flashlight-line text-green"></i> Quick Actions</h2>
+        </div>
+        <div class="quick-actions">
+          <a href="tracker.html" class="quick-action">
+            <div class="quick-action-icon" style="background: var(--primary-light); color: var(--primary);">
+              <i class="ri-add-circle-line"></i>
+            </div>
+            <span>Log a Meal</span>
+          </a>
+          <a class="quick-action" onclick="openModal('addChildModal')">
+            <div class="quick-action-icon" style="background: var(--accent-light); color: var(--accent);">
+              <i class="ri-user-add-line"></i>
+            </div>
+            <span>Register Child</span>
+          </a>
+          <a href="ngos.html" class="quick-action">
+            <div class="quick-action-icon" style="background: var(--blue-light); color: var(--blue);">
+              <i class="ri-map-pin-line"></i>
+            </div>
+            <span>Find NGOs</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Two Column: Children + Activity -->
+      <div class="grid-2 mb-32" style="align-items: start;">
+        <!-- Children List -->
+        <div class="card">
+          <div class="flex-between mb-16">
+            <h3 class="flex-center"><i class="ri-group-line text-green"></i> Enrolled Children</h3>
+            <button class="btn btn-sm btn-ghost" onclick="openModal('addChildModal')">
+              <i class="ri-add-line"></i> Add
+            </button>
+          </div>
+          <div id="childrenList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+          <h3 class="flex-center mb-16"><i class="ri-time-line text-green"></i> Recent Activity</h3>
+          <div class="activity-list" id="activityList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Child Modal -->
+  <div class="modal-overlay" id="addChildModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Register New Child</h2>
+        <button class="modal-close" onclick="closeModal('addChildModal')"><i class="ri-close-line"></i></button>
+      </div>
+      <form id="addChildForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Child's Name *</label>
+            <input type="text" class="form-input" id="childName" placeholder="e.g. Aarav Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Age (years) *</label>
+            <input type="number" class="form-input" id="childAge" min="0" max="6" placeholder="e.g. 3" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Gender</label>
+            <select class="form-select" id="childGender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Weight (kg) *</label>
+            <input type="number" class="form-input" id="childWeight" step="0.1" placeholder="e.g. 12.5" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Height (cm)</label>
+            <input type="number" class="form-input" id="childHeight" step="0.1" placeholder="e.g. 90">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Anganwadi Center</label>
+            <input type="text" class="form-input" id="childCenter" placeholder="e.g. Anganwadi #12, Jaipur">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('addChildModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="ri-check-line"></i> Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>🌿 <strong>PoshanTrack</strong> — Combating malnutrition, one meal at a time. Built for Anganwadi workers & communities.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

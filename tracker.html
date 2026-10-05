@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Tracker — PoshanTrack</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-icon">🌿</span>
+        <span>PoshanTrack</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">
+          <i class="ri-dashboard-line"></i> Dashboard
+        </a>
+        <a href="tracker.html" class="nav-link active">
+          <i class="ri-restaurant-line"></i> Food Tracker
+        </a>
+        <a href="ngos.html" class="nav-link">
+          <i class="ri-hand-heart-line"></i> NGOs Nearby
+        </a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- Page Header -->
+      <section class="hero">
+        <h1>🍽️ Food Intake <span>Tracker</span></h1>
+        <p>Log daily meals for each child and monitor their nutritional intake.</p>
+      </section>
+
+      <!-- Controls -->
+      <div class="tracker-top">
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label">Select Child</label>
+          <select class="form-select" id="childSelect">
+            <option value="">— Select a child —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="dateSelect">
+        </div>
+        <button class="btn btn-primary" onclick="openModal('addMealModal')">
+          <i class="ri-add-line"></i> Log Meal
+        </button>
+      </div>
+
+      <!-- Nutrition Summary -->
+      <section class="mb-24" id="nutritionSection" style="display:none;">
+        <div class="section-header">
+          <h2><i class="ri-bar-chart-box-line text-green"></i> Today's Nutrition</h2>
+        </div>
+        <div class="card">
+          <div class="grid-4 mb-24">
+            <div class="text-center">
+              <div class="stat-value text-green" id="totalCalories">0</div>
+              <div class="stat-label">Calories</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-value" style="color: var(--accent);" id="totalProtein">0g</div>
+              <div class="stat-label">Protein</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-value" style="color: var(--yellow);" id="totalCarbs">0g</div>
+              <div class="stat-label">Carbs</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-value" style="color: var(--purple);" id="totalIron">0mg</div>
+              <div class="stat-label">Iron</div>
+            </div>
+          </div>
+          <div class="nutrition-bars" id="nutritionBars">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Meal Log Table -->
+      <section id="mealLogSection" style="display:none;">
+        <div class="section-header">
+          <h2><i class="ri-file-list-3-line text-green"></i> Meal Log</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Meal</th>
+                <th>Food Item</th>
+                <th>Calories</th>
+                <th>Protein</th>
+                <th>Carbs</th>
+                <th>Iron</th>
+                <th>Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="mealLogBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="emptyMeals" style="display:none;">
+          <i class="ri-restaurant-line"></i>
+          <p>No meals logged for this date. Click "Log Meal" to start tracking.</p>
+        </div>
+      </section>
+
+      <!-- Empty State when no child selected -->
+      <div class="empty-state" id="noChildState">
+        <i class="ri-user-search-line"></i>
+        <p>Select a child from the dropdown above to view and log their food intake.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Meal Modal -->
+  <div class="modal-overlay" id="addMealModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Log a Meal</h2>
+        <button class="modal-close" onclick="closeModal('addMealModal')"><i class="ri-close-line"></i></button>
+      </div>
+      <form id="addMealForm">
+        <div class="form-group">
+          <label class="form-label">Meal Type</label>
+          <div class="meal-type-tabs" id="mealTypeTabs">
+            <button type="button" class="meal-tab active" data-meal="Breakfast">🌅 Breakfast</button>
+            <button type="button" class="meal-tab" data-meal="Lunch">☀️ Lunch</button>
+            <button type="button" class="meal-tab" data-meal="Snack">🍎 Snack</button>
+            <button type="button" class="meal-tab" data-meal="Dinner">🌙 Dinner</button>
+          </div>
+        </div>
+        <div class="form-group" style="position:relative;">
+          <label class="form-label">Food Item</label>
+          <input type="text" class="form-input" id="foodInput" placeholder="Type to search food..." autocomplete="off">
+          <div class="food-suggestions" id="foodSuggestions"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Calories</label>
+            <input type="number" class="form-input" id="mealCalories" placeholder="kcal" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Protein (g)</label>
+            <input type="number" class="form-input" id="mealProtein" placeholder="g" readonly>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Carbs (g)</label>
+            <input type="number" class="form-input" id="mealCarbs" placeholder="g" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Iron (mg)</label>
+            <input type="number" class="form-input" id="mealIron" placeholder="mg" readonly>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('addMealModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="ri-check-line"></i> Log Meal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>🌿 <strong>PoshanTrack</strong> — Combating malnutrition, one meal at a time.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/tracker.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NGOs Nearby — PoshanTrack</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-icon">🌿</span>
+        <span>PoshanTrack</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">
+          <i class="ri-dashboard-line"></i> Dashboard
+        </a>
+        <a href="tracker.html" class="nav-link">
+          <i class="ri-restaurant-line"></i> Food Tracker
+        </a>
+        <a href="ngos.html" class="nav-link active">
+          <i class="ri-hand-heart-line"></i> NGOs Nearby
+        </a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- Page Header -->
+      <section class="hero">
+        <h1>🤝 NGOs <span>Nearby</span></h1>
+        <p>Discover and connect with organizations fighting malnutrition in your area.</p>
+      </section>
+
+      <!-- Search -->
+      <div class="search-box">
+        <i class="ri-search-line"></i>
+        <input type="text" id="ngoSearch" placeholder="Search NGOs by name, location, or service...">
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="Food Supply">🍱 Food Supply</button>
+        <button class="filter-pill" data-filter="Healthcare">🏥 Healthcare</button>
+        <button class="filter-pill" data-filter="Education">📚 Education</button>
+        <button class="filter-pill" data-filter="Child Welfare">👶 Child Welfare</button>
+      </div>
+
+      <!-- NGO Count -->
+      <p class="mb-16" style="font-size: 0.875rem;" id="ngoCount">Showing 0 organizations</p>
+
+      <!-- NGO Cards Grid -->
+      <div class="grid-3" id="ngoGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="ngoEmpty" style="display:none;">
+        <i class="ri-search-eye-line"></i>
+        <p>No NGOs found matching your search. Try different keywords.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>🌿 <strong>PoshanTrack</strong> — Combating malnutrition, one meal at a time.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/ngos.js"></script>
+</body>
+</html>
